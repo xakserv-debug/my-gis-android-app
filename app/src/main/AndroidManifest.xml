@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.monitoringapp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Разрешения -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Обязательные разрешения для работы приложения -->
+
+    <!-- Разрешения на определение местоположения (точное и приблизительное) -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
-    <!-- Для Android 10+ -->
-    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <!-- Разрешение для работы в фоновом режиме (для Android 10 и выше) -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- Разрешение для работы foreground-сервиса -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Разрешение для камеры -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Разрешение для записи аудио -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Разрешение на запись файлов (нужно для сохранения фото/аудио перед отправкой) -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" /> <!-- maxSdkVersion="28" т.к. на новых Android Scoped Storage -->
 
     <application
         android:allowBackup="true"
@@ -31,37 +26,27 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
         android:theme="@style/Theme.MonitoringApp"
         tools:targetApi="31">
 
-        <!-- Главная активность -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Сервис мониторинга -->
+        <!-- Объявление нашего фонового сервиса -->
         <service
             android:name=".MonitoringService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="location|camera|microphone" />
 
-        <!-- Ресивер для автозапуска (ИСПРАВЛЕННЫЙ) -->
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-            </intent-filter>
-        </receiver>
-
     </application>
+
 </manifest>
