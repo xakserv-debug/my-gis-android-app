@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Monitoring App</string>
+    <string name="start_monitoring">Запустить мониторинг</string>
+    <string name="stop_monitoring">Остановить мониторинг</string>
+    <string name="service_status">Статус сервиса</string>
+    <string name="service_active">Сервис активен</string>
+    <string name="service_inactive">Сервис неактивен</string>
+</resources>
